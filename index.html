@@ -30,10 +30,25 @@
   --color-surface-deep:         #1E4034;  /* inverted sections */
   --color-surface-deep-raised:  #26503F;
 
+  /* Section grounds. All warm neutrals inside the Editorial Luxury range, plus
+     one cool sage and one ember. Sequenced so no two adjacent sections share a
+     ground: with the rules removed, the colour change is now the divider.
+
+     Constraint: raised surfaces are white, so any section holding a white card
+     (services, differentiators, FAQ) can never itself be white. */
+  --surface-cream:              #FBF7F0;
+  --surface-white:              #FFFFFF;
+  --surface-sand:               #F5EFE4;
+  --surface-sage:               #EDF1EC;
+  --surface-ember:              #FAEDE4;
+
   --color-primary:              #1E4034;  /* forest green — primary actions, headings */
   --color-primary-hover:        #16302A;
-  --color-accent:               #B8511D;  /* warm orange — single accent, darkened for AA on white */
-  --color-accent-hover:         #9C4416;
+  /* Darkened from #B8511D once sections gained their own grounds: the old value
+     cleared AA on cream at 4.6:1 but dropped to 4.3:1 on sand, which the numeral
+     and icon treatments would have failed. This clears every ground at 5:1+. */
+  --color-accent:               #A8481A;
+  --color-accent-hover:         #8E3B13;
 
   --color-text:                 #16211C;
   --color-text-secondary:       #47564F;  /* 7.4:1 on cream */
@@ -157,6 +172,13 @@ a { color: inherit; }
 
 section { padding-block: 128px; }
 @media (max-width: 720px) { section { padding-block: 72px; } }
+
+/* Section grounds. Applied per section; adjacent sections never repeat. */
+.s-cream { background: var(--surface-cream); }
+.s-white { background: var(--surface-white); }
+.s-sand  { background: var(--surface-sand); }
+.s-sage  { background: var(--surface-sage); }
+.s-ember { background: var(--surface-ember); }
 
 /* --- Buttons: one primary, one secondary, one on-dark. No competing styles. ---
    Hover colour is carried by a pseudo-element's opacity rather than by
@@ -756,9 +778,10 @@ section { padding-block: 128px; }
 .final__actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
 
 /* --- Footer --- */
+/* Footer inverts to close the page, bookending the offer section. */
 .footer {
-  background: var(--color-surface-raised);
-  padding-block: 48px;
+  background: var(--color-surface-deep);
+  padding-block: 56px;
 }
 .footer__inner {
   display: flex;
@@ -767,9 +790,9 @@ section { padding-block: 128px; }
   gap: 24px;
   align-items: center;
 }
-.footer p, .footer a { font-size: var(--text-xs); color: var(--color-text-secondary); }
+.footer p, .footer a { font-size: var(--text-xs); color: var(--color-text-on-dark-secondary); }
 .footer a { text-decoration: underline; text-underline-offset: 3px; }
-.footer a:hover { color: var(--color-primary); }
+.footer a:hover { color: var(--color-text-on-dark); }
 
 /* --- Motion ---
    Everything here animates transform and opacity only. Nothing animates a
@@ -852,7 +875,7 @@ section { padding-block: 128px; }
 <main id="top">
 
   <!-- ============ HERO ============ -->
-  <section class="hero">
+  <section class="hero s-cream">
     <div class="container hero__grid">
       <div>
                 <div class="pair hero-in" role="img" aria-label="JumpStart, in partnership with SigmaMD">
@@ -965,7 +988,7 @@ section { padding-block: 128px; }
   </section>
 
   <!-- ============ PARTNER STRIP ============ -->
-  <div class="strip">
+  <div class="strip s-white">
     <div class="container strip__inner">
       <div class="strip__item">
         <span class="strip__label">Who we work with</span>
@@ -983,7 +1006,7 @@ section { padding-block: 128px; }
   </div>
 
   <!-- ============ PROBLEM ============ -->
-  <section>
+  <section class="s-sand">
     <div class="container">
       <div class="section-head reveal">
         <h2>Great medicine doesn't market itself</h2>
@@ -1029,7 +1052,7 @@ section { padding-block: 128px; }
   </section>
 
   <!-- ============ SERVICES ============ -->
-  <section id="services">
+  <section id="services" class="s-cream">
     <div class="container">
       <div class="section-head reveal">
         <h2>What we actually do</h2>
@@ -1180,7 +1203,7 @@ section { padding-block: 128px; }
   </section>
 
   <!-- ============ DIFFERENTIATORS ============ -->
-  <section>
+  <section class="s-sage">
     <div class="container">
       <div class="section-head reveal">
         <h2>Why clinics stay with us</h2>
@@ -1269,7 +1292,7 @@ section { padding-block: 128px; }
   </section>
 
   <!-- ============ HOW IT WORKS ============ -->
-  <section>
+  <section class="s-cream">
     <div class="container">
       <div class="section-head reveal">
         <h2>How this goes</h2>
@@ -1318,7 +1341,7 @@ section { padding-block: 128px; }
   </section>
 
   <!-- ============ TESTIMONIALS ============ -->
-  <section>
+  <section class="s-sand">
     <div class="container">
       <div class="section-head reveal">
         <h2>From physicians who did this already</h2>
@@ -1361,7 +1384,7 @@ section { padding-block: 128px; }
   </section>
 
   <!-- ============ FAQ ============ -->
-  <section>
+  <section class="s-sage">
     <div class="container">
       <div class="section-head reveal">
         <h2>Questions we get from SigmaMD clinics</h2>
@@ -1447,7 +1470,7 @@ section { padding-block: 128px; }
   </section>
 
   <!-- ============ FINAL CTA ============ -->
-  <section class="final">
+  <section class="final s-ember">
     <div class="container">
       <h2 class="reveal">Let's talk about your practice</h2>
       <p class="reveal">
