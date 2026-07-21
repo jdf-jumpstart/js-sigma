@@ -32,6 +32,7 @@ Resolve these four questions before producing any output. If the brief doesn't a
 - No split-headline decoration: do not italicize or color-shift the second half of a headline or hook as a default stylistic move (e.g., "Your SEO" in white + "*in motion.*" in gold italic). This pattern is an agency-template tell with no semantic content. Italic and accent color are legitimate when they encode meaning — emphasis, a brand term, a named product — not when they exist solely to make a headline feel "dynamic." If you break a headline across styles, state the reason.
 - **Do not use eyebrows unless explicitly requested.** Section eyebrow labels (small all-caps text above a heading) are a default AI design crutch, not a universal UI pattern. Omit them entirely unless the user specifically asks for them or the brief describes a context where they carry real navigational meaning. When eyebrows are used, they must follow the remaining rules below.
 - **No decorative leading punctuation or lines before eyebrows or labels.** Do not prefix section eyebrows, category tags, or UI labels with an em dash (—), en dash (–), slash (/), dot (·), a horizontal rule, a thin `<hr>`-style line, or any other character or element used as a visual flourish. This includes the pattern `— EYEBROW TEXT` where a short horizontal stroke precedes the label. Eyebrows stand alone: plain text, all-caps, wide tracking if appropriate. A leading dash, slash, or decorative rule encodes nothing — it is pure decoration and a template tell.
+- **No pipe characters as dividers.** Do not use `|` to separate items in page titles, headers, nav, breadcrumbs, metadata rows, bylines, tag lists, or footers: `Page Title | Brand`, `Home | About | Contact`, `Jane Doe | Mar 4 | 5 min read`. The pipe is a table-column delimiter pressed into service as a visual separator. It encodes no relationship between the things on either side of it, and it is one of the most recognizable SEO-template and AI-output tells in existence. Use real structure instead: spacing, a border, a distinct type treatment, or separate elements. Where a text-only separator is genuinely unavoidable (a `<title>` tag, a plain-text byline, an OG description), use an en dash with spaces ( – ) or a middle dot ( · ). Pipes are acceptable only where they are actual syntax rather than decoration: Markdown table delimiters, code samples, shell pipelines, regex alternation.
 
 **Color**
 - Every color in the output maps to a named semantic role. Brand accent counts as a role.
@@ -88,6 +89,7 @@ These are the failure modes that mark output as machine-generated rather than de
 - Italic headings or titles with no semantic justification — used to feel editorial or warm rather than to encode meaning.
 - Eyebrow labels above headings when not requested — a reflexive AI pattern that adds visual noise without hierarchy value.
 - Decorative leading punctuation or lines before eyebrows or section labels: `— LABEL`, `– LABEL`, `/ LABEL`, `· LABEL`, or a short horizontal stroke preceding the text. All are template tells with no semantic content.
+- Pipe-delimited titles, nav, metadata, or footers: `Page Title | Brand`, `Home | About | Contact`, `Author | Date | Read time`. A table-column character doing a separator's job, and a hallmark of SEO boilerplate.
 - Body or UI text below 16px on mobile or 15px on desktop.
 
 ## Performance & correctness
@@ -108,6 +110,7 @@ Before delivering output, verify:
 - No heading or title uses italic without a stated semantic reason
 - No eyebrows used unless explicitly requested
 - No eyebrow or label has a leading decorative character or line (—, –, /, ·, horizontal stroke)
+- No pipe characters (`|`) used as dividers in titles, nav, breadcrumbs, metadata, or footers
 - All text — including muted, secondary, and eyebrow text — meets 4.5:1 contrast against its background
 - Color choices are named by role, not by hex value
 - Spacing follows the declared base unit
