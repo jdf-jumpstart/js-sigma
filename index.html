@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JumpStart for SigmaMD Clinics | Marketing for Independent Practices</title>
+<meta name="description" content="JumpStart is the marketing partner SigmaMD refers its clinics to. Branding, websites, and patient-facing copy for independent practices, at a partner rate.">
+<meta name="robots" content="noindex, nofollow">
+
+<meta property="og:title" content="JumpStart for SigmaMD Clinics">
+<meta property="og:description" content="SigmaMD runs your clinic. We fill it. Marketing built for independent practices, at a SigmaMD partner rate.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   DESIGN SYSTEM
+   Base unit: 4px. All spacing is a multiple of 4.
+   Type scale: 15 / 16 / 18 / 20 / 24 / 32 / 42 / 56
+   Elevation: 3 levels only — surface (flat), raised (border + 1 shadow), overlay (sticky nav)
+   Radius: 4px for controls, 12px for panels. Two radii, assigned by role.
+   ========================================================================== */
+:root {
+  /* Semantic color roles */
+  --color-surface:              #FBF7F0;  /* page ground, cream */
+  --color-surface-raised:       #FFFFFF;
+  --color-surface-deep:         #1E4034;  /* inverted sections */
+  --color-surface-deep-raised:  #26503F;
+
+  --color-primary:              #1E4034;  /* forest green — primary actions, headings */
+  --color-primary-hover:        #16302A;
+  --color-accent:               #B8511D;  /* warm orange — single accent, darkened for AA on white */
+  --color-accent-hover:         #9C4416;
+
+  --color-text:                 #16211C;
+  --color-text-secondary:       #47564F;  /* 7.4:1 on cream */
+  --color-text-on-dark:         #F2EFE8;
+  --color-text-on-dark-secondary:#B9C7BF; /* 7.1:1 on deep green */
+
+  --color-border:               #E4DDD0;
+  --color-border-strong:        #CFC4B0;
+  --color-border-on-dark:       #38594A;
+
+  /* Partner role: used ONLY where SigmaMD is the subject. Never as JumpStart brand color. */
+  --color-partner:              #1A62BC;
+  --color-partner-tint:         #EDF3FB;
+
+  /* Type scale */
+  --text-xs:   15px;
+  --text-sm:   16px;
+  --text-base: 18px;
+  --text-md:   20px;
+  --text-lg:   24px;
+  --text-xl:   32px;
+  --text-2xl:  42px;
+  --text-3xl:  56px;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --radius-control: 4px;
+  --radius-panel: 12px;
+
+  --shadow-raised: 0 1px 2px rgba(22, 33, 28, 0.04), 0 8px 24px rgba(22, 33, 28, 0.06);
+  --shadow-overlay: 0 1px 0 rgba(22, 33, 28, 0.08);
+
+  --measure: 66ch;
+  --container: 1120px;
+  --gutter: 24px;
+}
+
+/* Type floor: --text-xs is 15px on desktop, which is the minimum there. On mobile the
+   floor rises to 16px (below it, iOS Safari auto-zooms inputs and legibility drops).
+   The scale legitimately compresses at the bottom: xs and sm converge at 16px. */
+@media (max-width: 720px) {
+  :root { --text-xs: 16px; }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.12;
+  /* Fraunces sets loose at display sizes; -0.015em restores even color in the
+     42-56px range. Display headings only — body and UI text carry no tracking. */
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--color-primary);
+}
+p { margin: 0; }
+a { color: inherit; }
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+section { padding-block: 96px; }
+@media (max-width: 720px) { section { padding-block: 64px; } }
+
+/* --- Buttons: one primary, one secondary, one ghost. No third competing style. --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1;
+  padding: 16px 24px;
+  border-radius: var(--radius-control);
+  border: 1px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 140ms ease, opacity 140ms ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+
+.btn--primary { background: var(--color-accent); color: #FFFFFF; }
+.btn--primary:hover { background: var(--color-accent-hover); }
+
+.btn--secondary {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-border-strong);
+}
+.btn--secondary:hover { border-color: var(--color-primary); }
+
+.btn--on-dark { background: var(--color-surface-raised); color: var(--color-primary); }
+.btn--on-dark:hover { opacity: 0.9; }
+
+.btn--sm { padding: 12px 16px; font-size: var(--text-xs); }
+
+/* --- Header (overlay elevation) --- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(251, 247, 240, 0.88);
+  backdrop-filter: blur(12px); /* permitted: sticky element */
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-overlay);
+}
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 72px;
+}
+.lockup { display: flex; align-items: center; gap: 12px; }
+.wordmark {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.lockup__x {
+  color: var(--color-text-secondary);
+  font-size: var(--text-xs);
+}
+.lockup__partner {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-partner);
+}
+/* The partner label is the reason this page exists — it survives to the narrowest
+   viewport. Only the connecting word drops. */
+@media (max-width: 600px) {
+  .lockup__x { display: none; }
+  .lockup { gap: 8px; }
+}
+@media (max-width: 400px) { .wordmark { font-size: var(--text-sm); } }
+
+/* --- Hero --- */
+.hero { padding-block: 88px 72px; }
+.hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 64px;
+  align-items: start;
+}
+@media (max-width: 900px) { .hero__grid { grid-template-columns: 1fr; gap: 40px; } }
+
+/* Status badge, not an eyebrow: it states the visitor's relationship to the page.
+   No leading dot or dash — the text carries the meaning on its own. */
+.referral-note {
+  display: inline-block;
+  background: var(--color-partner-tint);
+  color: var(--color-partner);
+  border: 1px solid rgba(26, 98, 188, 0.22);
+  border-radius: var(--radius-control);
+  padding: 8px 12px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  margin-bottom: 28px;
+}
+
+.hero h1 {
+  font-size: clamp(42px, 6.2vw, var(--text-3xl));
+  margin-bottom: 24px;
+}
+.hero__sub {
+  font-size: var(--text-md);
+  color: var(--color-text-secondary);
+  max-width: 52ch;
+  margin-bottom: 36px;
+}
+.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+.hero__reassure {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+/* Hero side panel — raised elevation */
+.panel {
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-raised);
+  padding: 32px;
+}
+.panel__title {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 20px;
+}
+/* One tick-list component. Used in the hero panel and the offer card; the inverted
+   context is a modifier, not a second component. */
+.ticklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+.ticklist li {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 12px;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+/* 20x24 box letterboxes the 20x20 glyph so it centers on the first line box
+   without an off-grid margin nudge. */
+.ticklist svg { width: 20px; height: 24px; color: var(--color-accent); }
+.ticklist--on-dark li { color: var(--color-text-on-dark-secondary); }
+.ticklist--on-dark svg { color: var(--color-text-on-dark); }
+
+/* --- Partner strip --- */
+.strip {
+  background: var(--color-surface-raised);
+  border-block: 1px solid var(--color-border);
+  padding-block: 40px;
+}
+.strip__inner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+@media (max-width: 800px) { .strip__inner { grid-template-columns: 1fr; gap: 28px; } }
+.strip__item { display: grid; gap: 4px; }
+.strip__label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+.strip__value { font-size: var(--text-sm); color: var(--color-text); }
+
+/* --- Generic section head --- */
+.section-head { max-width: var(--measure); margin-bottom: 56px; }
+.section-head h2 { font-size: clamp(32px, 4.4vw, var(--text-2xl)); margin-bottom: 20px; }
+.section-head p { font-size: var(--text-base); color: var(--color-text-secondary); }
+
+/* --- Problem list --- */
+.problems { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 48px; }
+@media (max-width: 800px) { .problems { grid-template-columns: 1fr; } }
+.problem {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 4px 16px;
+  padding-block: 24px;
+  border-top: 1px solid var(--color-border);
+}
+.problem__num {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  color: var(--color-accent);
+  line-height: 1.3;
+}
+.problem h3 { font-size: var(--text-md); margin-bottom: 8px; }
+.problem p { font-size: var(--text-sm); color: var(--color-text-secondary); grid-column: 2; }
+
+/* --- Services: split rows, not a card grid --- */
+.services { display: grid; }
+.service {
+  display: grid;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  gap: 32px;
+  padding-block: 40px;
+  border-top: 1px solid var(--color-border);
+  align-items: start;
+}
+.service:last-child { border-bottom: 1px solid var(--color-border); }
+@media (max-width: 800px) { .service { grid-template-columns: 1fr; gap: 12px; padding-block: 32px; } }
+.service h3 { font-size: var(--text-lg); }
+.service__body p { font-size: var(--text-base); color: var(--color-text-secondary); max-width: var(--measure); }
+.service__deliverables {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.service__deliverables li {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-control);
+  padding: 4px 12px;
+}
+
+/* --- Differentiators --- */
+.diffs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  overflow: hidden;
+  background: var(--color-surface-raised);
+}
+@media (max-width: 800px) { .diffs { grid-template-columns: 1fr; } }
+.diff { padding: 36px; border-bottom: 1px solid var(--color-border); }
+.diff:nth-child(odd) { border-right: 1px solid var(--color-border); }
+.diff:nth-last-child(-n+2) { border-bottom: none; }
+@media (max-width: 800px) {
+  .diff { border-right: none !important; border-bottom: 1px solid var(--color-border) !important; }
+  .diff:last-child { border-bottom: none !important; }
+}
+.diff h3 { font-size: var(--text-md); margin-bottom: 12px; }
+.diff p { font-size: var(--text-sm); color: var(--color-text-secondary); }
+
+/* --- Offer (inverted section) --- */
+.inverted {
+  background: var(--color-surface-deep);
+  color: var(--color-text-on-dark);
+}
+.inverted h2, .inverted h3 { color: var(--color-text-on-dark); }
+.inverted p { color: var(--color-text-on-dark-secondary); }
+
+.offer__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  gap: 64px;
+  align-items: center;
+}
+@media (max-width: 900px) { .offer__grid { grid-template-columns: 1fr; gap: 40px; } }
+.offer h2 { font-size: clamp(32px, 4.4vw, var(--text-2xl)); margin-bottom: 20px; }
+.offer__lede { font-size: var(--text-base); max-width: var(--measure); margin-bottom: 32px; }
+
+.offer__card {
+  background: var(--color-surface-deep-raised);
+  border: 1px solid var(--color-border-on-dark);
+  border-radius: var(--radius-panel);
+  padding: 32px;
+}
+.offer__rate {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  line-height: 1;
+  color: var(--color-text-on-dark);
+  margin-bottom: 12px;
+}
+.offer__rate-note { font-size: var(--text-sm); margin-bottom: 28px; }
+.offer__card .ticklist { margin-bottom: 28px; }
+.offer__card .btn { width: 100%; }
+
+/* --- Steps --- */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+@media (max-width: 800px) { .steps { grid-template-columns: 1fr; gap: 32px; } }
+.step { border-top: 2px solid var(--color-primary); padding-top: 24px; }
+.step__num {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  color: var(--color-accent);
+  margin-bottom: 8px;
+}
+.step h3 { font-size: var(--text-md); margin-bottom: 10px; }
+.step p { font-size: var(--text-sm); color: var(--color-text-secondary); }
+
+/* --- Testimonials --- */
+.quotes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 48px; }
+@media (max-width: 800px) { .quotes { grid-template-columns: 1fr; gap: 32px; } }
+.quote { border-top: 1px solid var(--color-border); padding-top: 24px; }
+.quote blockquote {
+  margin: 0 0 20px;
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  line-height: 1.4;
+  color: var(--color-primary);
+}
+.quote__who { font-size: var(--text-sm); font-weight: 600; }
+.quote__where { font-size: var(--text-xs); color: var(--color-text-secondary); }
+
+/* --- FAQ --- */
+.faq { max-width: 800px; }
+.faq details {
+  border-top: 1px solid var(--color-border);
+  padding-block: 4px;
+}
+.faq details:last-of-type { border-bottom: 1px solid var(--color-border); }
+.faq summary {
+  cursor: pointer;
+  list-style: none;
+  padding-block: 24px;
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: var(--color-accent-hover); }
+.faq summary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.faq__icon { flex-shrink: 0; color: var(--color-accent); transition: transform 180ms ease; }
+.faq details[open] .faq__icon { transform: rotate(45deg); }
+.faq__answer {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  max-width: var(--measure);
+  padding-bottom: 28px;
+}
+
+/* --- Final CTA --- */
+.final { text-align: center; }
+.final h2 { font-size: clamp(32px, 4.6vw, var(--text-2xl)); margin-bottom: 20px; }
+.final p {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  max-width: 54ch;
+  margin: 0 auto 36px;
+}
+.final__actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+
+/* --- Footer --- */
+.footer {
+  background: var(--color-surface-raised);
+  border-top: 1px solid var(--color-border);
+  padding-block: 48px;
+}
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+}
+.footer p, .footer a { font-size: var(--text-xs); color: var(--color-text-secondary); }
+.footer a { text-decoration: underline; text-underline-offset: 3px; }
+.footer a:hover { color: var(--color-primary); }
+
+/* --- Reveal animation: transform + opacity only --- */
+.reveal { opacity: 0; transform: translateY(16px); }
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+  .reveal.is-visible { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <div class="lockup">
+      <a class="wordmark" href="#top">JumpStart</a>
+      <span class="lockup__x" aria-hidden="true">for</span>
+      <span class="lockup__partner">SigmaMD clinics</span>
+    </div>
+    <!-- TODO: replace with your Calendly URL -->
+    <a class="btn btn--primary btn--sm" href="https://calendly.com/REPLACE-ME">Book a call</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container hero__grid">
+      <div>
+        <p class="referral-note">Referred by SigmaMD</p>
+        <h1>SigmaMD runs your clinic. We fill it.</h1>
+        <p class="hero__sub">
+          JumpStart is the marketing team SigmaMD points its practices toward. We handle branding,
+          websites, and the words that turn a curious visitor into a scheduled patient, so you can
+          stay in the exam room.
+        </p>
+        <div class="hero__actions">
+          <!-- TODO: replace with your Calendly URL -->
+          <a class="btn btn--primary" href="https://calendly.com/REPLACE-ME">Book a call</a>
+          <a class="btn btn--secondary" href="#services">See what we do</a>
+        </div>
+        <p class="hero__reassure">
+          30 minutes, no pitch deck. If we're not the right fit we'll say so on the call.
+        </p>
+      </div>
+
+      <aside class="panel">
+        <p class="panel__title">What SigmaMD clinics come to us for</p>
+        <ul class="ticklist">
+          <li>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>A website that explains the membership model without a 20 minute phone call</span>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>A brand that looks like the care they actually deliver</span>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Enough patients to stop watching the panel count every morning</span>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Someone to own marketing so the physician stops doing it at 10pm</span>
+          </li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ PARTNER STRIP ============ -->
+  <div class="strip">
+    <div class="container strip__inner">
+      <div class="strip__item">
+        <span class="strip__label">How the partnership works</span>
+        <span class="strip__value">SigmaMD runs the clinical side. JumpStart handles everything that happens before someone becomes your patient.</span>
+      </div>
+      <div class="strip__item">
+        <span class="strip__label">Who we work with</span>
+        <span class="strip__value">Independent clinics across primary care, concierge, pediatrics, women's health, and specialty practice.</span>
+      </div>
+      <div class="strip__item">
+        <span class="strip__label">What the referral gets you</span>
+        <span class="strip__value">A flat monthly retainer at the SigmaMD partner rate. No hourly billing, no surprise invoices.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PROBLEM ============ -->
+  <section>
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Great medicine doesn't market itself</h2>
+        <p>
+          You left the system to practice the way you wanted. Nobody warned you that the hard part
+          wouldn't be the medicine. Here's where most clinics get stuck.
+        </p>
+      </div>
+
+      <div class="problems">
+        <div class="problem reveal">
+          <span class="problem__num" aria-hidden="true">1</span>
+          <h3>Nobody in town knows what you are</h3>
+          <p>Patients understand copays and networks. Membership medicine takes explaining, and you shouldn't have to do it one conversation at a time.</p>
+        </div>
+        <div class="problem reveal">
+          <span class="problem__num" aria-hidden="true">2</span>
+          <h3>The website was built in a weekend</h3>
+          <p>It was fine for launch. Now it's the first thing every referral sees, and it's doing you no favors.</p>
+        </div>
+        <div class="problem reveal">
+          <span class="problem__num" aria-hidden="true">3</span>
+          <h3>Marketing happens after clinic hours</h3>
+          <p>Social posts, flyers, and email drafts pile up on the one person who is already seeing patients all day.</p>
+        </div>
+        <div class="problem reveal">
+          <span class="problem__num" aria-hidden="true">4</span>
+          <h3>Growth is word of mouth and hope</h3>
+          <p>Referrals are wonderful and completely unpredictable. You can't build a schedule on them alone.</p>
+        </div>
+        <div class="problem reveal">
+          <span class="problem__num" aria-hidden="true">5</span>
+          <h3>You look like every other clinic</h3>
+          <p>Stock photo of a stethoscope, blue gradient, "patient-centered care." Nothing that tells someone why you.</p>
+        </div>
+        <div class="problem reveal">
+          <span class="problem__num" aria-hidden="true">6</span>
+          <h3>Agencies don't get the model</h3>
+          <p>Most healthcare marketers optimize for volume and insurance billing. That advice actively hurts a membership practice.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section id="services">
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>What we actually do</h2>
+        <p>
+          Four things, done properly. You can take one or hand us the whole thing.
+        </p>
+      </div>
+
+      <div class="services">
+        <article class="service reveal">
+          <h3>Branding</h3>
+          <div class="service__body">
+            <p>
+              It's the pillar of your presence. How you stand out to potential patients, have them
+              recognize your practice, and know what you stand for. We build the mark, the palette,
+              and the rules so everything you print or post looks like it came from one place.
+            </p>
+            <ul class="service__deliverables">
+              <li>Logo and mark</li>
+              <li>Color and type system</li>
+              <li>Brand guidelines</li>
+              <li>Print collateral</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="service reveal">
+          <h3>Web design</h3>
+          <div class="service__body">
+            <p>
+              From your website to your social media presence, we'll help you develop and refine your
+              message for the digital age across all mediums. Your site should answer the membership
+              question, show the pricing, and get someone to book without a phone call.
+            </p>
+            <ul class="service__deliverables">
+              <li>Full practice website</li>
+              <li>Enrollment and booking flow</li>
+              <li>Local search setup</li>
+              <li>Social templates</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="service reveal">
+          <h3>Copywriting</h3>
+          <div class="service__body">
+            <p>
+              Crafting your story is more important than ever before. Healthcare is confusing, and it
+              shouldn't be. We write the plain-language version: what you offer, what it costs, and
+              what happens after someone signs up.
+            </p>
+            <ul class="service__deliverables">
+              <li>Website copy</li>
+              <li>Patient emails</li>
+              <li>Employer and referral outreach</li>
+              <li>FAQ and objection handling</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="service reveal">
+          <h3>Full-service marketing</h3>
+          <div class="service__body">
+            <p>
+              A partner who understands your model, your patients, and your growth goals. We run the
+              calendar, produce the work, and report on what moved the panel count. You approve, we
+              execute.
+            </p>
+            <ul class="service__deliverables">
+              <li>Monthly strategy</li>
+              <li>Campaign production</li>
+              <li>Community and employer outreach</li>
+              <li>Growth reporting</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DIFFERENTIATORS ============ -->
+  <section>
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Why clinics stay with us</h2>
+        <p>
+          We came up inside the Direct Primary Care movement and now work with independent practices
+          of every stripe. The thread is the same: doctors who own their practice and need patients
+          to find them.
+        </p>
+      </div>
+
+      <div class="diffs reveal">
+        <div class="diff">
+          <h3>We know the model</h3>
+          <p>
+            JumpStart was built inside the Direct Primary Care movement. We know why "book more
+            appointments" is the wrong goal for a membership practice, and what to chase instead.
+          </p>
+        </div>
+        <div class="diff">
+          <h3>One monthly number</h3>
+          <p>
+            No surprises and no hourly fees that sneak up on you. A flat monthly retainer, agreed up
+            front, that you can actually plan a budget around.
+          </p>
+        </div>
+        <div class="diff">
+          <h3>Nothing off a template</h3>
+          <p>
+            There are no cookie cutter solutions here. Your clinic in Rapid City doesn't need the same
+            campaign as a concierge practice outside Baltimore, and we don't pretend otherwise.
+          </p>
+        </div>
+        <div class="diff">
+          <h3>You keep the work</h3>
+          <p>
+            Files, guidelines, and a 75-page marketing guide are yours to keep. If we part ways, you
+            walk away with a brand you own rather than a login you lose.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OFFER ============ -->
+  <section class="inverted offer">
+    <div class="container offer__grid">
+      <div class="reveal">
+        <h2>SigmaMD clinics get a partner rate</h2>
+        <p class="offer__lede">
+          SigmaMD sends us practices that already made the hard decision: to run independently and
+          bill patients directly. That's most of the work. We'd rather get you moving than haggle,
+          so referrals from SigmaMD come in below our standard retainer.
+        </p>
+        <p class="offer__lede">
+          Mention SigmaMD on the call and it's applied. No code, no expiring countdown.
+        </p>
+      </div>
+
+      <div class="offer__card reveal">
+        <!-- TODO: replace [XX] with the agreed SigmaMD partner discount -->
+        <p class="offer__rate">[XX]% off</p>
+        <p class="offer__rate-note">the standard JumpStart monthly retainer, for as long as you're a SigmaMD client.</p>
+        <ul class="ticklist ticklist--on-dark">
+          <li>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Applies to any JumpStart retainer package</span>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>No long-term contract, 30 days notice to stop</span>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Nothing owed for the first call</span>
+          </li>
+        </ul>
+        <!-- TODO: replace with your Calendly URL -->
+        <a class="btn btn--on-dark" href="https://calendly.com/REPLACE-ME">Claim the partner rate</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section>
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>How this goes</h2>
+        <p>Three steps. The first one costs you half an hour.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal">
+          <p class="step__num" aria-hidden="true">1</p>
+          <h3>We talk</h3>
+          <p>
+            Thirty minutes on your practice, your market, and where growth is stalling. Tell us you
+            came from SigmaMD. If marketing isn't your real bottleneck, we'll tell you that instead of
+            selling you something.
+          </p>
+        </div>
+        <div class="step reveal">
+          <p class="step__num" aria-hidden="true">2</p>
+          <h3>You get a plan</h3>
+          <p>
+            A written recommendation with scope, timeline, and the monthly number with your partner
+            rate already applied. No proposal theater, no pressure to sign on the call.
+          </p>
+        </div>
+        <div class="step reveal">
+          <p class="step__num" aria-hidden="true">3</p>
+          <h3>We build</h3>
+          <p>
+            Brand and website first, then the ongoing work. You approve everything before it goes out.
+            Most clinics see their new site live inside 60 days.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section>
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>From physicians who did this already</h2>
+      </div>
+
+      <div class="quotes">
+        <figure class="quote reveal">
+          <blockquote>"The materials provided by JumpStart DPC Solutions are nothing short of exceptional."</blockquote>
+          <figcaption>
+            <p class="quote__who">Patrick Erickson, DO, M.Ed</p>
+            <p class="quote__where">Cascade DPC, Milwaukie, OR</p>
+          </figcaption>
+        </figure>
+
+        <figure class="quote reveal">
+          <blockquote>"JumpStart was the difference between going blind into a venture versus going in with a strong confident guide."</blockquote>
+          <figcaption>
+            <p class="quote__who">Dr. Elie Miller</p>
+            <p class="quote__where">Apex Concierge Health, Pikesville, MD</p>
+          </figcaption>
+        </figure>
+
+        <figure class="quote reveal">
+          <blockquote>"His high-quality promotional materials has been a game-changer, allowing us to quickly establish our brand."</blockquote>
+          <figcaption>
+            <p class="quote__who">Dr. Carl Erickson</p>
+            <p class="quote__where">Cascade DPC, Milwaukie, OR</p>
+          </figcaption>
+        </figure>
+
+        <figure class="quote reveal">
+          <blockquote>"Thanks to JumpStart, Golden Medical Care now has a professional and cohesive brand that truly resonates with our patients."</blockquote>
+          <figcaption>
+            <p class="quote__who">Dr. Deb Kullerd</p>
+            <p class="quote__where">Golden Medical Care, Rapid City, SD</p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section>
+    <div class="container">
+      <div class="section-head reveal">
+        <h2>Questions we get from SigmaMD clinics</h2>
+      </div>
+
+      <div class="faq reveal">
+        <details>
+          <summary>
+            We're not a DPC practice. Do you still work with us?
+            <svg class="faq__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="faq__answer">
+            Yes. We started in Direct Primary Care and that's still where we're deepest, but the work
+            translates to any independent practice that sells directly to patients. Pediatrics,
+            women's health, functional medicine, behavioral health, specialty concierge. If you own
+            the practice and need patients to find you, we can help.
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            Do you build anything inside SigmaMD?
+            <svg class="faq__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="faq__answer">
+            No, and you wouldn't want us to. SigmaMD handles the clinical and membership side. We
+            handle everything before a patient becomes a patient, then hand them off cleanly to your
+            SigmaMD enrollment and scheduling flow.
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            What does it cost?
+            <svg class="faq__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="faq__answer">
+            A flat monthly retainer, scoped to what you need, with the SigmaMD partner rate applied.
+            We'll give you the exact number in writing after the first call. No hourly billing and
+            nothing that changes month to month without you agreeing to it first.
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            How long before we see new patients?
+            <svg class="faq__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="faq__answer">
+            Honest answer: brand and website usually take 30 to 60 days to build, and patient growth
+            follows from there. Anyone promising a full panel in three weeks is selling you something.
+            What you'll see early is that the practice finally looks and reads the way you'd describe
+            it out loud.
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            Who owns the work when we're done?
+            <svg class="faq__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="faq__answer">
+            You do. Logo files, brand guidelines, website, and copy are yours to keep whether we keep
+            working together or not.
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            We're pre-launch. Is it too early?
+            <svg class="faq__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="faq__answer">
+            It's the best time. Practices that open with a finished brand and a working website spend
+            their first year growing instead of retrofitting. Several of the clinics SigmaMD sends us
+            haven't seen their first patient yet.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="final">
+    <div class="container">
+      <h2 class="reveal">Let's talk about your practice</h2>
+      <p class="reveal">
+        Half an hour, no slides. Bring your website and your growth numbers and we'll tell you
+        straight what we'd change first.
+      </p>
+      <div class="final__actions reveal">
+        <!-- TODO: replace with your Calendly URL -->
+        <a class="btn btn--primary" href="https://calendly.com/REPLACE-ME">Book a call</a>
+        <a class="btn btn--secondary" href="mailto:team@itsjumpstart.com?subject=SigmaMD%20referral">Email us instead</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <p>JumpStart. Marketing for independent practices.</p>
+    <p>
+      <a href="mailto:team@itsjumpstart.com">team@itsjumpstart.com</a>
+      &nbsp;·&nbsp;
+      <a href="https://itsjumpstart.com">itsjumpstart.com</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+// Reveal on scroll via IntersectionObserver — no scroll listener, no layout thrash.
+(function () {
+  var items = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    items.forEach(function (el) { el.classList.add('is-visible'); });
+    return;
+  }
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+
+  items.forEach(function (el) { observer.observe(el); });
+})();
+</script>
+
+</body>
+</html>
