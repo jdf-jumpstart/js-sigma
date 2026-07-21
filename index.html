@@ -491,6 +491,23 @@ section { padding-block: 96px; }
 }
 .chip:hover, .chip:focus-visible { transform: translateY(-4px); }
 .chip:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+
+/* Link variant: same chip, but it navigates rather than explains. */
+.chip--link {
+  width: 136px;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 28px;
+}
+.chip--link .chip__color { position: relative; }
+.chip--link .chip__arrow {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  color: var(--color-surface);
+  transition: transform 180ms ease;
+}
+.chip--link:hover .chip__arrow, .chip--link:focus-visible .chip__arrow { transform: translateX(3px); }
 /* Hairline keeps the pale chips (Bone, Linen) from dissolving into the white foot. */
 .chip__color {
   display: block;
@@ -587,12 +604,14 @@ section { padding-block: 96px; }
 .hero-in:nth-child(3) { animation-delay: 220ms; }
 .hero-in:nth-child(4) { animation-delay: 300ms; }
 .hero-in:nth-child(5) { animation-delay: 380ms; }
+.hero-in:nth-child(6) { animation-delay: 460ms; }
 @keyframes hero-enter { to { opacity: 1; transform: none; } }
 
 .hero__panel-in { opacity: 0; transform: translateY(24px); animation: hero-enter 760ms cubic-bezier(0.22, 1, 0.36, 1) 300ms forwards; }
 
-/* Chips cascade after the branding row lands. */
-.chip { opacity: 0; transform: translateY(12px); }
+/* Chips cascade after the branding row lands. Scoped to .reveal so chips used
+   elsewhere (the hero portfolio chip) are not left permanently hidden. */
+.reveal .chip { opacity: 0; transform: translateY(12px); }
 .reveal.is-visible .chip {
   opacity: 1;
   transform: none;
@@ -610,7 +629,7 @@ section { padding-block: 96px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal, .chip { opacity: 1; transform: none; }
+  .reveal, .reveal .chip { opacity: 1; transform: none; }
   .reveal.is-visible, .reveal.is-visible .chip { transition: none; }
   .hero-in, .hero__panel-in { opacity: 1; transform: none; animation: none; }
   .chip:hover, .chip:focus-visible { transform: none; }
@@ -653,6 +672,24 @@ section { padding-block: 96px; }
         <p class="hero__reassure hero-in">
           30 minutes, no pitch deck. If we're not the right fit we'll say so on the call.
         </p>
+
+        <!-- Wrapper carries the entrance animation. A forwards-filling animation
+             locks transform on its own element, which would freeze the chip's
+             hover lift, so the two live on separate elements. -->
+        <div class="hero-in">
+        <!-- TODO: replace with your portfolio URL -->
+        <a class="chip chip--link" href="https://REPLACE-ME-portfolio-url" style="--chip:#B8511D">
+          <span class="chip__color">
+            <svg class="chip__arrow" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M5 15L15 5M15 5H7M15 5v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="chip__meta">
+            <span class="chip__name">Portfolio</span>
+            <span class="chip__code">See the work</span>
+          </span>
+        </a>
+        </div>
       </div>
 
       <aside class="panel hero__panel-in">
@@ -822,17 +859,17 @@ section { padding-block: 96px; }
 
               <div class="chip-note" id="pantone-note" role="tooltip">
                 <p>
-                  <strong>Why chips exist.</strong> Before 1963, "red" meant one thing to a designer
-                  and something else to whichever shop printed the job. Lawrence Herbert, who had
-                  bought Pantone the year before, ended the argument by giving every ink a number and
-                  printing it on a tear-off chip. You mailed the chip to your printer. No more
-                  guessing.
+                  <strong>Where chips came from.</strong> Before 1963, "red" meant one thing to a
+                  designer and something else to whoever printed the job. Pantone gave every ink a
+                  number, and the argument ended.
                 </p>
                 <p>
-                  <strong>Why we still work this way.</strong> Your palette gets pinned to exact
-                  values before anything gets designed, so the green on your sign is the green on
-                  your intake form is the green on your website. Sixty years later that is still the
-                  whole trick: decide the color once, write it down, never argue about it again.
+                  <strong>Why we think this hard about color.</strong> Color theory is the part most
+                  practices skip. It decides whether your palette reads as clinical or calm, whether
+                  a green that looks right on a backlit phone still looks right on a printed intake
+                  form, and whether your text stays legible for a patient with low vision. We settle
+                  all of that before anything gets designed, then pin it to exact values so it can't
+                  drift later.
                 </p>
               </div>
             </div>
