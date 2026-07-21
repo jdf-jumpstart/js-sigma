@@ -44,9 +44,12 @@
   --color-border-strong:        #CFC4B0;
   --color-border-on-dark:       #38594A;
 
-  /* Partner role: used ONLY where SigmaMD is the subject. Never as JumpStart brand color. */
-  --color-partner:              #1A62BC;
-  --color-partner-tint:         #EDF3FB;
+  /* Partner role: used ONLY where SigmaMD is the subject. Never as JumpStart brand
+     color. Taken from SigmaMD's own logo, which runs a #B64798 to #91006D gradient.
+     The darker stop is used for text because it clears AA; the lighter one does not. */
+  --color-partner:              #91006D;
+  --color-partner-tint:         #FAEFF7;
+  --color-partner-border:       rgba(145, 0, 109, 0.20);
 
   /* Type scale */
   --text-xs:   15px;
@@ -209,16 +212,28 @@ section { padding-block: 96px; }
 /* Status badge, not an eyebrow: it states the visitor's relationship to the page.
    No leading dot or dash — the text carries the meaning on its own. */
 .referral-note {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   background: var(--color-partner-tint);
   color: var(--color-partner);
-  border: 1px solid rgba(26, 98, 188, 0.22);
+  border: 1px solid var(--color-partner-border);
   border-radius: var(--radius-control);
   padding: 8px 12px;
   font-size: var(--text-xs);
   font-weight: 600;
   margin-bottom: 28px;
 }
+/* Logo is inlined rather than hotlinked from SigmaMD's CDN, so it cannot break
+   if they reorganise their assets. It keeps its own gradient. Sized by height
+   with width:auto so the wordmark's aspect ratio is never distorted. */
+.referral-note__logo {
+  display: block;
+  height: 16px;
+  width: auto;
+  flex-shrink: 0;
+}
+.referral-note__text { white-space: nowrap; }
 
 .hero h1 {
   font-size: clamp(42px, 6.2vw, var(--text-3xl));
@@ -704,7 +719,48 @@ section { padding-block: 96px; }
   <section class="hero">
     <div class="container hero__grid">
       <div>
-        <p class="referral-note hero-in">Referred by SigmaMD</p>
+        <p class="referral-note hero-in">
+          <span class="referral-note__text">Referred by</span>
+            <svg class="referral-note__logo" role="img" aria-label="SigmaMD" viewBox="0 0 536 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M29.5619 70.9957C48.0201 70.9957 58.547 62.7706 58.547 48.4848C58.547 38.6724 53.9324 32.9004 42.9729 28.4271L31.8692 24.0981C27.3988 22.2222 26.2452 21.3564 26.2452 19.4805C26.2452 17.4603 28.1199 16.5945 32.0134 16.5945C37.3489 16.5945 44.7034 18.3261 51.0484 21.2121L57.2491 4.329C48.4527 1.443 40.6656 0 33.167 0C15.5741 0 5.33556 7.79221 5.33556 21.3564C5.33556 30.8802 10.5269 37.8066 21.0538 41.9913L33.0228 46.8975C36.6279 48.4848 37.4931 49.062 37.4931 50.7937C37.4931 53.1025 35.6185 53.9683 31.0039 53.9683C23.3611 53.9683 15.4299 51.6595 8.07545 46.8975L0 64.0693C8.65226 68.5426 19.035 70.9957 29.5619 70.9957Z" fill="url(#sm-paint0_linear_1955_5631)"/>
+            <path d="M77.6879 0.000102561C71.5241 0.000102561 65.8561 5.17241 65.8561 11.8402C65.8561 18.5079 71.5241 23.6803 77.6879 23.6803C84.4502 23.6803 89.5196 18.5079 89.5196 11.8402C89.5196 5.17241 83.8516 0.000102561 77.6879 0.000102561ZM66.7283 29.7146V68.8312H88.5032V29.7146H66.7283Z" fill="url(#sm-paint1_linear_1955_5631)"/>
+            <path d="M128.867 0C110.986 0 98.1514 13.7085 98.1514 35.6421C98.1514 56.7099 110.553 69.697 128.723 69.697C139.826 69.697 147.613 64.6465 153.382 53.6796L153.958 53.824C153.093 58.153 152.661 60.7504 152.661 63.6364V64.9351C152.661 75.3247 145.45 79.9423 134.058 79.9423C124.829 79.9423 118.052 77.4892 110.841 73.7374L101.612 91.4863C110.12 96.3925 120.791 100 135.645 100C157.996 100 173.859 90.1876 173.859 63.0592V2.1645H152.084C152.084 8.94661 152.805 12.987 153.958 17.1717L153.382 17.316C149.056 7.3593 141.557 0 128.867 0ZM135.933 19.9134C144.729 19.9134 151.651 25.974 151.651 35.4978C151.651 45.0216 144.729 51.0823 135.933 51.0823C127.281 51.0823 120.503 45.1659 120.503 35.4978C120.503 25.8297 127.281 19.9134 135.933 19.9134Z" fill="url(#sm-paint2_linear_1955_5631)"/>
+            <path d="M208.841 68.8312V36.5079C208.841 23.2323 214.465 19.1919 221.386 19.1919C227.876 19.1919 232.346 22.5108 232.346 33.189V68.8312H253.256V36.5079C253.256 23.2323 258.735 19.1919 265.657 19.1919C272.146 19.1919 276.617 22.5108 276.617 33.4776V68.8312H298.392V26.5512C298.392 8.22511 289.018 0 275.03 0C262.34 0 255.419 7.50361 251.814 16.4502H251.237C248.497 6.06061 242.584 0 230.327 0C218.791 0 212.302 5.3391 207.399 16.1616L206.822 15.873C207.975 10.8225 208.408 7.50361 208.408 2.1645H187.066V68.8312H208.841Z" fill="url(#sm-paint3_linear_1955_5631)"/>
+            <path d="M341.096 0C333.309 0 323.648 0.865798 314.995 2.4531L318.024 19.7691C327.685 18.0375 332.444 17.6046 338.357 17.6046C346.865 17.6046 352.2 20.9235 352.2 26.2626C352.2 31.4574 352.489 34.3434 353.354 36.9408L352.777 37.2294C348.018 29.0043 340.231 24.8196 329.993 24.8196C315.428 24.8196 305.91 33.7662 305.91 47.619C305.91 61.7605 315.428 70.9957 329.704 70.9957C340.375 70.9957 348.451 65.6566 353.065 55.1227L353.786 55.5556C352.2 59.596 351.479 63.7807 351.479 68.8312H373.254V26.5512C373.254 7.64791 364.025 0 341.096 0ZM338.501 37.6623C343.98 37.6623 347.874 41.2698 347.874 46.176C347.874 51.0822 343.98 54.6898 338.501 54.6898C333.021 54.6898 329.272 51.2265 329.272 46.176C329.272 41.2698 333.021 37.6623 338.501 37.6623Z" fill="url(#sm-paint4_linear_1955_5631)"/>
+            <path d="M386.364 1.92866V68.8313L404.964 68.8314V46.0767C404.964 36.973 403.397 32.9907 403.397 32.9907L404.033 32.6721L414.074 58.1823H433.703L443.83 32.7039L444.403 32.9907C444.403 32.9907 442.899 36.973 442.899 45.997V68.8314L462.773 68.8313V1.92866H434.673L426.135 24.8823C425.457 26.7055 424.992 28.6013 424.751 30.5317L424.623 31.557H424.135L424.009 30.5487C423.764 28.6071 423.294 26.7007 422.608 24.8683L414.018 1.92866H386.364Z" fill="url(#sm-paint5_linear_1955_5631)"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M514.807 4.46012C510.16 2.77248 504.728 1.92866 498.511 1.92866H472.325V68.8314H498.511C504.728 68.8314 510.16 67.9273 514.807 66.1192C519.516 64.2507 523.441 61.7795 526.581 58.7056C529.72 55.5714 532.075 52.0756 533.645 48.2181C535.215 44.3004 536 40.3224 536 36.2841V34.2951C536 29.8952 535.215 25.7364 533.645 21.8187C532.075 17.9009 529.72 14.4654 526.581 11.512C523.441 8.49839 519.516 6.14776 514.807 4.46012ZM492.709 49.259V19.8694H500.244C502.605 19.8694 504.715 20.1942 506.574 20.844C508.483 21.4438 510.091 22.3685 511.397 23.618C512.703 24.8176 513.708 26.3421 514.411 28.1914C515.114 29.9908 515.466 32.09 515.466 34.4892C515.466 36.7884 515.114 38.8626 514.411 40.712C513.708 42.5113 512.703 44.0608 511.397 45.3603C510.091 46.6099 508.483 47.5845 506.574 48.2843C504.715 48.9341 502.605 49.259 500.244 49.259H492.709Z" fill="url(#sm-paint6_linear_1955_5631)"/>
+            <defs>
+            <linearGradient id="sm-paint0_linear_1955_5631" x1="34" y1="65.5" x2="403.5" y2="-42.5" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#B64798"/>
+            <stop offset="1" stop-color="#91006D"/>
+            </linearGradient>
+            <linearGradient id="sm-paint1_linear_1955_5631" x1="34" y1="65.5" x2="403.5" y2="-42.5" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#B64798"/>
+            <stop offset="1" stop-color="#91006D"/>
+            </linearGradient>
+            <linearGradient id="sm-paint2_linear_1955_5631" x1="34" y1="65.5" x2="403.5" y2="-42.5" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#B64798"/>
+            <stop offset="1" stop-color="#91006D"/>
+            </linearGradient>
+            <linearGradient id="sm-paint3_linear_1955_5631" x1="34" y1="65.5" x2="403.5" y2="-42.5" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#B64798"/>
+            <stop offset="1" stop-color="#91006D"/>
+            </linearGradient>
+            <linearGradient id="sm-paint4_linear_1955_5631" x1="34" y1="65.5" x2="403.5" y2="-42.5" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#B64798"/>
+            <stop offset="1" stop-color="#91006D"/>
+            </linearGradient>
+            <linearGradient id="sm-paint5_linear_1955_5631" x1="34" y1="65.5" x2="403.5" y2="-42.5" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#B64798"/>
+            <stop offset="1" stop-color="#91006D"/>
+            </linearGradient>
+            <linearGradient id="sm-paint6_linear_1955_5631" x1="34" y1="65.5" x2="403.5" y2="-42.5" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#B64798"/>
+            <stop offset="1" stop-color="#91006D"/>
+            </linearGradient>
+            </defs>
+            </svg>
+        </p>
         <h1 class="hero-in">Fill your schedule without giving up your evenings.</h1>
         <p class="hero__sub hero-in">
           We build the brand, the website, and the words that turn someone searching for a doctor
