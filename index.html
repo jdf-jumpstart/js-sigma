@@ -478,7 +478,12 @@ section { padding-block: 96px; }
 
 .chip {
   display: block;
-  width: 84px;
+  /* Sizes to its label rather than a fixed width. The old hardcoded 84px was set
+     against Inter and overflowed once the body face became Montserrat, which is
+     considerably wider per character. Content-sized means a future font change
+     cannot break it again. */
+  width: auto;
+  min-width: 96px;
   padding: 0;
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-control);
@@ -493,21 +498,56 @@ section { padding-block: 96px; }
 .chip:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
 
 /* Link variant: same chip, but it navigates rather than explains. */
-.chip--link {
-  width: 136px;
-  cursor: pointer;
-  text-decoration: none;
-  margin-top: 28px;
-}
+.chip--link { cursor: pointer; text-decoration: none; }
 .chip--link .chip__color { position: relative; }
 .chip--link .chip__arrow {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  right: 12px;
+  bottom: 12px;
   color: var(--color-surface);
   transition: transform 180ms ease;
 }
 .chip--link:hover .chip__arrow, .chip--link:focus-visible .chip__arrow { transform: translateX(3px); }
+
+/* Portfolio chip: the hero's signature object. Sits in the bottom right of the
+   hero, tilted, at roughly a quarter of the container's width.
+
+   The tilt lives here while the entrance animation lives on the slot wrapper.
+   Keeping them on separate elements is deliberate: a forwards-filling animation
+   locks transform on its own element and would freeze both the tilt and the
+   hover lift. */
+.hero__side { display: grid; gap: 48px; }
+.hero__chip-slot {
+  justify-self: end;
+  opacity: 0;
+  animation: chip-land 820ms cubic-bezier(0.22, 1, 0.36, 1) 420ms forwards;
+}
+@keyframes chip-land { to { opacity: 1; } }
+
+.chip--portfolio {
+  --angle: -6deg;
+  width: 244px;
+  min-width: 0;
+  border-width: 0;
+  border-radius: 6px;
+  box-shadow: var(--shadow-raised);
+  transform: rotate(var(--angle));
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.chip--portfolio:hover,
+.chip--portfolio:focus-visible { transform: rotate(var(--angle)) translateY(-10px); }
+.chip--portfolio .chip__color { height: 224px; border-bottom: none; }
+.chip--portfolio .chip__meta { padding: 16px 20px 20px; }
+.chip--portfolio .chip__name { font-size: var(--text-md); }
+.chip--portfolio .chip__code { font-size: var(--text-sm); }
+.chip--portfolio .chip__arrow { right: 20px; bottom: 20px; }
+
+/* Below the hero's two-column breakpoint the chip stops being a corner object
+   and just becomes content, so the tilt shrinks and it stops hugging the edge. */
+@media (max-width: 900px) {
+  .hero__chip-slot { justify-self: start; }
+  .chip--portfolio { --angle: -3deg; width: 208px; }
+}
 /* Hairline keeps the pale chips (Bone, Linen) from dissolving into the white foot. */
 .chip__color {
   display: block;
@@ -515,7 +555,7 @@ section { padding-block: 96px; }
   background: var(--chip);
   border-bottom: 1px solid var(--color-border);
 }
-.chip__meta { display: block; padding: 8px; }
+.chip__meta { display: block; padding: 8px 12px; }
 .chip__name {
   display: block;
   font-size: var(--text-xs);
@@ -528,6 +568,8 @@ section { padding-block: 96px; }
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
   line-height: 1.3;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Shared note. Absolutely positioned so showing it never shifts layout. */
@@ -604,7 +646,6 @@ section { padding-block: 96px; }
 .hero-in:nth-child(3) { animation-delay: 220ms; }
 .hero-in:nth-child(4) { animation-delay: 300ms; }
 .hero-in:nth-child(5) { animation-delay: 380ms; }
-.hero-in:nth-child(6) { animation-delay: 460ms; }
 @keyframes hero-enter { to { opacity: 1; transform: none; } }
 
 .hero__panel-in { opacity: 0; transform: translateY(24px); animation: hero-enter 760ms cubic-bezier(0.22, 1, 0.36, 1) 300ms forwards; }
@@ -632,7 +673,13 @@ section { padding-block: 96px; }
   .reveal, .reveal .chip { opacity: 1; transform: none; }
   .reveal.is-visible, .reveal.is-visible .chip { transition: none; }
   .hero-in, .hero__panel-in { opacity: 1; transform: none; animation: none; }
+  .hero__chip-slot { opacity: 1; animation: none; }
   .chip:hover, .chip:focus-visible { transform: none; }
+  /* The tilt is a static layout decision, not motion, so it stays. Without this
+     the blanket transform:none above would snap the chip upright on hover. */
+  .chip--portfolio,
+  .chip--portfolio:hover,
+  .chip--portfolio:focus-visible { transform: rotate(var(--angle)); transition: none; }
   .chips.is-open .chip-note { transition: none; }
 }
 </style>
@@ -672,26 +719,9 @@ section { padding-block: 96px; }
         <p class="hero__reassure hero-in">
           30 minutes, no pitch deck. If we're not the right fit we'll say so on the call.
         </p>
-
-        <!-- Wrapper carries the entrance animation. A forwards-filling animation
-             locks transform on its own element, which would freeze the chip's
-             hover lift, so the two live on separate elements. -->
-        <div class="hero-in">
-        <!-- TODO: replace with your portfolio URL -->
-        <a class="chip chip--link" href="https://REPLACE-ME-portfolio-url" style="--chip:#B8511D">
-          <span class="chip__color">
-            <svg class="chip__arrow" width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <path d="M5 15L15 5M15 5H7M15 5v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </span>
-          <span class="chip__meta">
-            <span class="chip__name">Portfolio</span>
-            <span class="chip__code">See the work</span>
-          </span>
-        </a>
-        </div>
       </div>
 
+      <div class="hero__side">
       <aside class="panel hero__panel-in">
         <p class="panel__title">What SigmaMD clinics come to us for</p>
         <ul class="ticklist">
@@ -713,6 +743,22 @@ section { padding-block: 96px; }
           </li>
         </ul>
       </aside>
+
+      <div class="hero__chip-slot">
+        <!-- TODO: replace with your portfolio URL -->
+        <a class="chip chip--link chip--portfolio" href="https://REPLACE-ME-portfolio-url" style="--chip:#B8511D">
+          <span class="chip__color">
+            <svg class="chip__arrow" width="22" height="22" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M5 15L15 5M15 5H7M15 5v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="chip__meta">
+            <span class="chip__name">Portfolio</span>
+            <span class="chip__code">See the work</span>
+          </span>
+        </a>
+      </div>
+      </div>
     </div>
   </section>
 
