@@ -455,6 +455,87 @@ section { padding-block: 96px; }
   padding-bottom: 28px;
 }
 
+/* --- Pantone-style color chips ---
+   The chip format (color block over a labelled white foot) is the recognizable
+   artifact; it earns its place by making the color-theory claim concrete rather
+   than asserted. One shared note panel serves all five chips, which avoids
+   per-chip overflow math entirely. */
+.chips { position: relative; margin-top: 28px; }
+.chips__label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 12px;
+}
+.chips__row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.chip {
+  display: block;
+  width: 84px;
+  padding: 0;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-raised);
+  overflow: hidden;
+  cursor: help;
+  text-align: left;
+  font-family: var(--font-body);
+  transition: transform 180ms ease;
+}
+.chip:hover, .chip:focus-visible { transform: translateY(-4px); }
+.chip:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+/* Hairline keeps the pale chips (Bone, Linen) from dissolving into the white foot. */
+.chip__color {
+  display: block;
+  height: 76px;
+  background: var(--chip);
+  border-bottom: 1px solid var(--color-border);
+}
+.chip__meta { display: block; padding: 8px; }
+.chip__name {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+.chip__code {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  line-height: 1.3;
+}
+
+/* Shared note. Absolutely positioned so showing it never shifts layout. */
+.chip-note {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  z-index: 10;
+  width: min(100%, 460px);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-raised);
+  padding: 24px;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+.chip-note strong { color: var(--color-text); font-weight: 600; }
+.chip-note p + p { margin-top: 12px; }
+.chips.is-open .chip-note { opacity: 1; transform: none; }
+
 /* --- Final CTA --- */
 .final { text-align: center; }
 .final h2 { font-size: clamp(32px, 4.6vw, var(--text-2xl)); margin-bottom: 20px; }
@@ -483,16 +564,55 @@ section { padding-block: 96px; }
 .footer a { text-decoration: underline; text-underline-offset: 3px; }
 .footer a:hover { color: var(--color-primary); }
 
-/* --- Reveal animation: transform + opacity only --- */
+/* --- Motion ---
+   Everything here animates transform and opacity only. Nothing animates a
+   property that triggers layout. --stagger-index is set by JS on grouped
+   children so siblings cascade instead of snapping in as one block. */
 .reveal { opacity: 0; transform: translateY(16px); }
 .reveal.is-visible {
   opacity: 1;
   transform: none;
-  transition: opacity 500ms ease, transform 500ms ease;
+  transition:
+    opacity 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--stagger-index, 0) * 70ms);
 }
+
+/* Hero runs on load rather than on scroll: it is already in view. */
+.hero-in { opacity: 0; transform: translateY(20px); animation: hero-enter 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.hero-in:nth-child(1) { animation-delay: 60ms; }
+.hero-in:nth-child(2) { animation-delay: 140ms; }
+.hero-in:nth-child(3) { animation-delay: 220ms; }
+.hero-in:nth-child(4) { animation-delay: 300ms; }
+.hero-in:nth-child(5) { animation-delay: 380ms; }
+@keyframes hero-enter { to { opacity: 1; transform: none; } }
+
+.hero__panel-in { opacity: 0; transform: translateY(24px); animation: hero-enter 760ms cubic-bezier(0.22, 1, 0.36, 1) 300ms forwards; }
+
+/* Chips cascade after the branding row lands. */
+.chip { opacity: 0; transform: translateY(12px); }
+.reveal.is-visible .chip {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(240ms + var(--chip-index, 0) * 70ms);
+}
+/* Hover must beat the entrance delay and duration, or the lift crawls. */
+.reveal.is-visible .chip:hover,
+.reveal.is-visible .chip:focus-visible {
+  transition-delay: 0ms;
+  transition-duration: 180ms;
+  transform: translateY(-4px);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; }
-  .reveal.is-visible { transition: none; }
+  .reveal, .chip { opacity: 1; transform: none; }
+  .reveal.is-visible, .reveal.is-visible .chip { transition: none; }
+  .hero-in, .hero__panel-in { opacity: 1; transform: none; animation: none; }
+  .chip:hover, .chip:focus-visible { transform: none; }
+  .chips.is-open .chip-note { transition: none; }
 }
 </style>
 </head>
@@ -516,24 +636,24 @@ section { padding-block: 96px; }
   <section class="hero">
     <div class="container hero__grid">
       <div>
-        <p class="referral-note">Referred by SigmaMD</p>
-        <h1>Fill your schedule without giving up your evenings.</h1>
-        <p class="hero__sub">
+        <p class="referral-note hero-in">Referred by SigmaMD</p>
+        <h1 class="hero-in">Fill your schedule without giving up your evenings.</h1>
+        <p class="hero__sub hero-in">
           We build the brand, the website, and the words that turn someone searching for a doctor
           into someone who signs up. You stay in the exam room. As a SigmaMD clinic, you get our
           partner rate.
         </p>
-        <div class="hero__actions">
+        <div class="hero__actions hero-in">
           <!-- TODO: replace with your Calendly URL -->
           <a class="btn btn--primary" href="https://calendly.com/REPLACE-ME">Book a call</a>
           <a class="btn btn--secondary" href="#services">See what we do</a>
         </div>
-        <p class="hero__reassure">
+        <p class="hero__reassure hero-in">
           30 minutes, no pitch deck. If we're not the right fit we'll say so on the call.
         </p>
       </div>
 
-      <aside class="panel">
+      <aside class="panel hero__panel-in">
         <p class="panel__title">What SigmaMD clinics come to us for</p>
         <ul class="ticklist">
           <li>
@@ -647,6 +767,73 @@ section { padding-block: 96px; }
               <li>Brand guidelines</li>
               <li>Print collateral</li>
             </ul>
+
+            <div class="chips" data-chips>
+              <p class="chips__label">Hover a chip to see how we pin down color</p>
+              <ul class="chips__row">
+                <li>
+                  <button class="chip" type="button" aria-describedby="pantone-note" style="--chip:#1E4034">
+                    <span class="chip__color"></span>
+                    <span class="chip__meta">
+                      <span class="chip__name">Forest</span>
+                      <span class="chip__code">#1E4034</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button class="chip" type="button" aria-describedby="pantone-note" style="--chip:#B8511D">
+                    <span class="chip__color"></span>
+                    <span class="chip__meta">
+                      <span class="chip__name">Ember</span>
+                      <span class="chip__code">#B8511D</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button class="chip" type="button" aria-describedby="pantone-note" style="--chip:#FBF7F0">
+                    <span class="chip__color"></span>
+                    <span class="chip__meta">
+                      <span class="chip__name">Bone</span>
+                      <span class="chip__code">#FBF7F0</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button class="chip" type="button" aria-describedby="pantone-note" style="--chip:#E4DDD0">
+                    <span class="chip__color"></span>
+                    <span class="chip__meta">
+                      <span class="chip__name">Linen</span>
+                      <span class="chip__code">#E4DDD0</span>
+                    </span>
+                  </button>
+                </li>
+                <li>
+                  <button class="chip" type="button" aria-describedby="pantone-note" style="--chip:#16211C">
+                    <span class="chip__color"></span>
+                    <span class="chip__meta">
+                      <span class="chip__name">Ink</span>
+                      <span class="chip__code">#16211C</span>
+                    </span>
+                  </button>
+                </li>
+              </ul>
+
+              <div class="chip-note" id="pantone-note" role="tooltip">
+                <p>
+                  <strong>Why chips exist.</strong> Before 1963, "red" meant one thing to a designer
+                  and something else to whichever shop printed the job. Lawrence Herbert, who had
+                  bought Pantone the year before, ended the argument by giving every ink a number and
+                  printing it on a tear-off chip. You mailed the chip to your printer. No more
+                  guessing.
+                </p>
+                <p>
+                  <strong>Why we still work this way.</strong> Your palette gets pinned to exact
+                  values before anything gets designed, so the green on your sign is the green on
+                  your intake form is the green on your website. Sixty years later that is still the
+                  whole trick: decide the color once, write it down, never argue about it again.
+                </p>
+              </div>
+            </div>
           </div>
         </article>
 
@@ -989,6 +1176,23 @@ section { padding-block: 96px; }
 </footer>
 
 <script>
+// Stagger indices for grouped reveals, so siblings cascade instead of snapping
+// in together. Set as a custom property; the delay math lives in CSS.
+(function () {
+  ['.problems', '.steps', '.quotes', '.services'].forEach(function (selector) {
+    document.querySelectorAll(selector).forEach(function (group) {
+      group.querySelectorAll(':scope > .reveal').forEach(function (child, i) {
+        child.style.setProperty('--stagger-index', i);
+      });
+    });
+  });
+  document.querySelectorAll('[data-chips]').forEach(function (group) {
+    group.querySelectorAll('.chip').forEach(function (chip, i) {
+      chip.style.setProperty('--chip-index', i);
+    });
+  });
+})();
+
 // Reveal on scroll via IntersectionObserver — no scroll listener, no layout thrash.
 (function () {
   var items = document.querySelectorAll('.reveal');
@@ -1007,6 +1211,52 @@ section { padding-block: 96px; }
   }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
 
   items.forEach(function (el) { observer.observe(el); });
+})();
+
+// Pantone note. Hover is the desktop affordance, but hover does not exist on
+// touch and is not reachable by keyboard, so focus and tap are wired too.
+(function () {
+  var groups = document.querySelectorAll('[data-chips]');
+  if (!groups.length) return;
+
+  var canHover = window.matchMedia('(hover: hover)').matches;
+
+  var closeAll = function () {
+    document.querySelectorAll('[data-chips].is-open').forEach(function (g) {
+      g.classList.remove('is-open');
+    });
+  };
+
+  groups.forEach(function (group) {
+    var open = function () { group.classList.add('is-open'); };
+
+    if (canHover) {
+      group.addEventListener('mouseenter', open);
+      group.addEventListener('mouseleave', function () { group.classList.remove('is-open'); });
+    } else {
+      // Tap toggles. Without this the note is unreachable on a phone.
+      group.querySelectorAll('.chip').forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          var wasOpen = group.classList.contains('is-open');
+          closeAll();
+          if (!wasOpen) open();
+        });
+      });
+    }
+
+    // Keyboard, both cases.
+    group.addEventListener('focusin', open);
+    group.addEventListener('focusout', function (e) {
+      if (!group.contains(e.relatedTarget)) group.classList.remove('is-open');
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('[data-chips]')) closeAll();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeAll();
+  });
 })();
 </script>
 
