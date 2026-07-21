@@ -201,11 +201,10 @@ section { padding-block: 96px; }
 
 /* --- Hero --- */
 .hero {
-  position: relative;
   padding-block: 88px 72px;
-  /* Clips the portfolio chip where it bleeds past the hero's corner. `clip`
-     rather than `hidden` because hidden creates a scroll container. */
-  overflow: clip;
+  /* Safety net for the tilted chip's bounding box. `clip` rather than `hidden`
+     because hidden creates a scroll container. */
+  overflow-x: clip;
 }
 .hero__grid {
   display: grid;
@@ -592,31 +591,11 @@ section { padding-block: 96px; }
 .chip--portfolio .chip__code { font-size: var(--text-sm); }
 .chip--portfolio .chip__arrow { right: 24px; bottom: 24px; }
 
-/* Dog-ear: the chip is pinned to the hero's own bottom right corner and bleeds
-   past it, so the hero clips it. It has to anchor to .hero rather than to the
-   centred content container, otherwise on a wide screen it would just float in
-   the empty margin instead of poking out of the corner.
-
-   The bleed is horizontal-dominant on purpose. A heavy vertical bleed looks
-   better but eats the label, and the label is the call to action. */
-@media (min-width: 901px) {
-  .hero { padding-bottom: 240px; }
-  .hero__chip-slot {
-    position: absolute;
-    right: -72px;
-    bottom: -44px;
-    z-index: 1;
-  }
-  .chip--portfolio { --angle: -9deg; }
-}
-
-/* Below the two-column breakpoint it stops being a corner object and becomes
-   ordinary content: no bleed, gentler tilt, back in flow. */
+/* Below the hero's two-column breakpoint the chip stops being a corner object
+   and just becomes content, so the tilt shrinks and it stops hugging the edge. */
 @media (max-width: 900px) {
-  .hero__chip-slot { align-self: flex-start; }
+  .hero__chip-slot { justify-self: start; }
   .chip--portfolio { --angle: -3deg; width: 208px; }
-  .chip--portfolio .chip__color { height: 196px; }
-  .chip--portfolio .chip__name { font-size: var(--text-md); }
 }
 /* Hairline keeps the pale chips (Bone, Linen) from dissolving into the white foot. */
 .chip__color {
