@@ -433,6 +433,40 @@ section { padding-block: 128px; }
 }
 .strip__value { font-size: var(--text-sm); color: var(--color-text); }
 
+/* --- Capability banner: one-line scan of what we do, directly under the hero --- */
+.capbanner { padding-block: 32px; }
+.capbanner__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px 28px;
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+.capbanner__list li { position: relative; }
+.capbanner__list li + li::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--color-accent);
+}
+@media (max-width: 720px) {
+  .capbanner { padding-block: 24px; }
+  .capbanner__list { font-size: var(--text-sm); gap: 10px 20px; }
+  .capbanner__list li + li::before { left: -10px; }
+}
+
 /* --- Generic section head --- */
 .section-head { max-width: var(--measure); margin-bottom: 56px; }
 .section-head h2 { font-size: clamp(32px, 4.4vw, var(--text-2xl)); margin-bottom: 20px; }
@@ -1000,6 +1034,20 @@ section { padding-block: 128px; }
       </div>
     </div>
   </section>
+
+  <!-- ============ CAPABILITIES BANNER ============ -->
+  <div class="capbanner s-sand">
+    <div class="container">
+      <ul class="capbanner__list">
+        <li>Branding</li>
+        <li>Website Design</li>
+        <li>Copy</li>
+        <li>SEO</li>
+        <li>AEO</li>
+        <li>Social Media</li>
+      </ul>
+    </div>
+  </div>
 
   <!-- ============ PARTNER STRIP ============ -->
   <div class="strip s-white">
